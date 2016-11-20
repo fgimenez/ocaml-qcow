@@ -11,43 +11,33 @@ tags: [
   "org:mirage"
 ]
 
-build: [
-  [make "PREFIX=%{prefix}%"]
-]
-
-install: [make "PREFIX=%{prefix}%" "install"]
-
-remove: [[make "PREFIX=%{prefix}%" "uninstall"]]
-
 depends: [
-  "base-bytes"
-  "cstruct"
-  "result"
-  "mirage-types-lwt"
-  "lwt"
-  "mirage-block" {>= "0.2" }
-  "mirage-block-unix" {>= "2.1.0" }
-  "cmdliner"
-  "sexplib"
-  "logs"
-  "fmt"
   "astring"
-  "ocamlfind" {build}
-  "oasis" {build}
-  "ppx_tools" {build}
-  "ppx_sexp_conv" {build}
-  "ppx_type_conv" {build}
-  "ounit" {test}
-  "mirage-block-ramdisk" {test}
+  "cmdliner"
+  "cstruct"
+  "fmt"
   "ezjsonm" {test}
+  "io-page" {build}
+  "lwt"
+  "logs"
+  "mirage-block" {>= "0.2" }
+  "mirage-block-ramdisk" {test}
+  "mirage-block-unix" {>= "2.1.0" }
+  "mirage-types-lwt"
   "nbd" {test & >= "2.0.1"}
+  "ocamlfind" {build}
+  "ounit" {test}
+  "ppx_sexp_conv" {build}
+  "ppx_tools" {build}
+  "ppx_type_conv" {build}
+  "result"
+  "sexplib"
 ]
-build-doc: ["ocaml" "setup.ml" "-doc"]
 
+build: [ "ocaml" "pkg/pkg.ml" "build" "--pinned" "%{pinned}%" "--tests" "false" ]
 build-test: [
-  ["ocaml" "setup.ml" "-configure" "--enable-tests"]
-  ["ocaml" "setup.ml" "-build"]
-  ["ocaml" "setup.ml" "-test"]
+  [ "ocaml" "pkg/pkg.ml" "build" "--pinned" "%{pinned}%" "--tests" "true" ]
+  [ "ocaml" "pkg/pkg.ml" "test" ]
 ]
 
 available: [ocaml-version >= "4.02.0"]

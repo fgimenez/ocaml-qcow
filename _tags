@@ -1,0 +1,11 @@
+true : bin_annot, safe_string, package(bytes)
+
+<lib>: include
+
+<lib/**>: package(astring cmdliner cstruct logs lwt mirage-block mirage-block-unix mirage-types.lwt ppx_sexp_conv ppx_tools ppx_type_conv)
+
+<cli/**>: package(astring cmdliner io-page logs logs.fmt lwt mirage-block mirage-block-unix result sexplib)
+
+<cli/*.native>: package(io-page.unix)
+
+<lib_test/*>: package(ezjsonm mirage-block mirage-block-ramdisk ppx_sexp_conv)
